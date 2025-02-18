@@ -24,6 +24,7 @@ message LoginUserRequest {
   string password = 2;
 }
 
+
 message LoginUserResponse {
   string user_id = 1;
   string name = 2;
