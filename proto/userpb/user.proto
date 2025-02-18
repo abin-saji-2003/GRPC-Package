@@ -28,18 +28,18 @@ message LoginUserRequest {
 }
 
 message LoginUserResponse {
-  uint32 user_id = 1;
+  string user_id = 1;  // Change to string for consistency with MongoDB's ObjectId
   string name = 2;
   string email = 3;
 }
 
 // ✅ Fetch User by ID (New)
 message GetUserByIDRequest {
-  uint32 user_id = 1;
+  string user_id = 1;  // Change to string for consistency with MongoDB's ObjectId
 }
 
 message GetUserByIDResponse {
-  uint32 user_id = 1;
+  string user_id = 1;  // Change to string for consistency with MongoDB's ObjectId
   string name = 2;
   string email = 3;
 }
