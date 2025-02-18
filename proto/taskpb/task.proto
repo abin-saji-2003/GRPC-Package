@@ -32,5 +32,5 @@ message Task {
   string user_id = 2;
   string description = 3;
   string status = 4;
-  int64 scheduled_at = 5;
+  string scheduled_at = 5;
 }
