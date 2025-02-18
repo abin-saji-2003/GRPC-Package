@@ -1,4 +1,4 @@
-module github.com/abin-saji-2003/GRPC-Package
+module github.com/abin-saji-2003/GRPC-Pkg
 
 go 1.22.6
 
