@@ -7,8 +7,10 @@ option go_package = "proto/taskuserpb";
 service UserService {
   rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse);
   rpc LoginUser (LoginUserRequest) returns (LoginUserResponse);
+  rpc GetUserByID (GetUserByIDRequest) returns (GetUserByIDResponse); // Added GetUserByID
 }
 
+// RegisterUser request and response
 message RegisterUserRequest {
   string name = 1;
   string email = 2;
@@ -19,13 +21,24 @@ message RegisterUserResponse {
   string message = 1;
 }
 
+// LoginUser request and response
 message LoginUserRequest {
   string email = 1;
   string password = 2;
 }
 
-
 message LoginUserResponse {
+  string user_id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+// GetUserByID request and response
+message GetUserByIDRequest {
+  string user_id = 1; // Assuming user_id is a string. If it is an integer, change the type accordingly
+}
+
+message GetUserByIDResponse {
   string user_id = 1;
   string name = 2;
   string email = 3;
