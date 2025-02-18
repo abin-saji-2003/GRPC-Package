@@ -12,7 +12,7 @@ service TaskService {
 message CreateTaskRequest {
   string user_id = 1;
   string description = 2;
-  int64 scheduled_at = 3; // Unix timestamp for scheduled time
+  string scheduled_at = 3; // Unix timestamp for scheduled time
 }
 
 message CreateTaskResponse {
