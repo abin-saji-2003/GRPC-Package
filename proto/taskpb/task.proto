@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "proto/taskpb";
+
+service TaskService {
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse);
+  rpc GetUserTasks (GetUserTasksRequest) returns (GetUserTasksResponse);
+}
+
+message CreateTaskRequest {
+  string user_id = 1;
+  string description = 2;
+  int64 scheduled_at = 3; // Unix timestamp for scheduled time
+}
+
+message CreateTaskResponse {
+  string message = 1;
+}
+
+message GetUserTasksRequest {
+  string user_id = 1;
+}
+
+message GetUserTasksResponse {
+  repeated Task tasks = 1;
+}
+
+message Task {
+  string id = 1;
+  string user_id = 2;
+  string description = 3;
+  string status = 4;
+  int64 scheduled_at = 5;
+}
