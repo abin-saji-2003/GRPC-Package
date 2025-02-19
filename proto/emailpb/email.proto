@@ -8,6 +8,7 @@ service EmailService {
   rpc CreateEmail(CreateEmailRequest) returns (CreateEmailResponse);
   rpc GetPendingEmails(GetPendingEmailsRequest) returns (GetPendingEmailsResponse);
   rpc UpdateEmailStatus(UpdateEmailStatusRequest) returns (UpdateEmailStatusResponse);
+  rpc GetAllEmails(GetAllEmailsRequest) returns (GetAllEmailsResponse); // ✅ Added this method
 }
 
 message CreateEmailRequest {
@@ -33,6 +34,12 @@ message UpdateEmailStatusRequest {
 
 message UpdateEmailStatusResponse {
   string message = 1;
+}
+
+message GetAllEmailsRequest {}
+
+message GetAllEmailsResponse {
+  repeated Email emails = 1;
 }
 
 message Email {

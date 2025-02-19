@@ -22,6 +22,7 @@ const (
 	EmailService_CreateEmail_FullMethodName       = "/proto.EmailService/CreateEmail"
 	EmailService_GetPendingEmails_FullMethodName  = "/proto.EmailService/GetPendingEmails"
 	EmailService_UpdateEmailStatus_FullMethodName = "/proto.EmailService/UpdateEmailStatus"
+	EmailService_GetAllEmails_FullMethodName      = "/proto.EmailService/GetAllEmails"
 )
 
 // EmailServiceClient is the client API for EmailService service.
@@ -31,6 +32,7 @@ type EmailServiceClient interface {
 	CreateEmail(ctx context.Context, in *CreateEmailRequest, opts ...grpc.CallOption) (*CreateEmailResponse, error)
 	GetPendingEmails(ctx context.Context, in *GetPendingEmailsRequest, opts ...grpc.CallOption) (*GetPendingEmailsResponse, error)
 	UpdateEmailStatus(ctx context.Context, in *UpdateEmailStatusRequest, opts ...grpc.CallOption) (*UpdateEmailStatusResponse, error)
+	GetAllEmails(ctx context.Context, in *GetAllEmailsRequest, opts ...grpc.CallOption) (*GetAllEmailsResponse, error)
 }
 
 type emailServiceClient struct {
@@ -71,6 +73,16 @@ func (c *emailServiceClient) UpdateEmailStatus(ctx context.Context, in *UpdateEm
 	return out, nil
 }
 
+func (c *emailServiceClient) GetAllEmails(ctx context.Context, in *GetAllEmailsRequest, opts ...grpc.CallOption) (*GetAllEmailsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAllEmailsResponse)
+	err := c.cc.Invoke(ctx, EmailService_GetAllEmails_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // EmailServiceServer is the server API for EmailService service.
 // All implementations must embed UnimplementedEmailServiceServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type EmailServiceServer interface {
 	CreateEmail(context.Context, *CreateEmailRequest) (*CreateEmailResponse, error)
 	GetPendingEmails(context.Context, *GetPendingEmailsRequest) (*GetPendingEmailsResponse, error)
 	UpdateEmailStatus(context.Context, *UpdateEmailStatusRequest) (*UpdateEmailStatusResponse, error)
+	GetAllEmails(context.Context, *GetAllEmailsRequest) (*GetAllEmailsResponse, error)
 	mustEmbedUnimplementedEmailServiceServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedEmailServiceServer) GetPendingEmails(context.Context, *GetPen
 }
 func (UnimplementedEmailServiceServer) UpdateEmailStatus(context.Context, *UpdateEmailStatusRequest) (*UpdateEmailStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmailStatus not implemented")
+}
+func (UnimplementedEmailServiceServer) GetAllEmails(context.Context, *GetAllEmailsRequest) (*GetAllEmailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllEmails not implemented")
 }
 func (UnimplementedEmailServiceServer) mustEmbedUnimplementedEmailServiceServer() {}
 func (UnimplementedEmailServiceServer) testEmbeddedByValue()                      {}
@@ -172,6 +188,24 @@ func _EmailService_UpdateEmailStatus_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _EmailService_GetAllEmails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllEmailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmailServiceServer).GetAllEmails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EmailService_GetAllEmails_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmailServiceServer).GetAllEmails(ctx, req.(*GetAllEmailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // EmailService_ServiceDesc is the grpc.ServiceDesc for EmailService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var EmailService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateEmailStatus",
 			Handler:    _EmailService_UpdateEmailStatus_Handler,
+		},
+		{
+			MethodName: "GetAllEmails",
+			Handler:    _EmailService_GetAllEmails_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
