@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "proto/emailpb";
+
+service EmailService {
+  rpc CreateEmail(CreateEmailRequest) returns (CreateEmailResponse);
+  rpc GetPendingEmails(GetPendingEmailsRequest) returns (GetPendingEmailsResponse);
+  rpc UpdateEmailStatus(UpdateEmailStatusRequest) returns (UpdateEmailStatusResponse);
+}
+
+message CreateEmailRequest {
+  string to = 1;
+  string subject = 2;
+  string body = 3;
+}
+
+message CreateEmailResponse {
+  string message = 1;
+}
+
+message GetPendingEmailsRequest {}
+
+message GetPendingEmailsResponse {
+  repeated Email emails = 1;
+}
+
+message UpdateEmailStatusRequest {
+  string id = 1;
+  string status = 2;
+}
+
+message UpdateEmailStatusResponse {
+  string message = 1;
+}
+
+message Email {
+  string id = 1;
+  string to = 2;
+  string subject = 3;
+  string body = 4;
+  string status = 5;
+}
